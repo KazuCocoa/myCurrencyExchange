@@ -14,6 +14,7 @@
 		72DD707F2104B120004BFA53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DD707D2104B120004BFA53 /* LaunchScreen.storyboard */; };
 		72DD708A2104B120004BFA53 /* myCurrencyExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DD70892104B120004BFA53 /* myCurrencyExchangeTests.swift */; };
 		72DD70952104B120004BFA53 /* myCurrencyExchangeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DD70942104B120004BFA53 /* myCurrencyExchangeUITests.swift */; };
+		72DD70A72104EBD2004BFA53 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72DD70A62104EBD2004BFA53 /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,8 @@
 		72DD70902104B120004BFA53 /* myCurrencyExchangeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myCurrencyExchangeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72DD70942104B120004BFA53 /* myCurrencyExchangeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myCurrencyExchangeUITests.swift; sourceTree = "<group>"; };
 		72DD70962104B120004BFA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72DD70A32104C798004BFA53 /* Siesta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Siesta.framework; path = Carthage/Build/iOS/Siesta.framework; sourceTree = "<group>"; };
+		72DD70A62104EBD2004BFA53 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72DD70A72104EBD2004BFA53 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +85,7 @@
 				72DD70882104B120004BFA53 /* myCurrencyExchangeTests */,
 				72DD70932104B120004BFA53 /* myCurrencyExchangeUITests */,
 				72DD70722104B11B004BFA53 /* Products */,
+				72DD70A22104C798004BFA53 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +130,15 @@
 			path = myCurrencyExchangeUITests;
 			sourceTree = "<group>";
 		};
+		72DD70A22104C798004BFA53 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				72DD70A62104EBD2004BFA53 /* Alamofire.framework */,
+				72DD70A32104C798004BFA53 /* Siesta.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +149,7 @@
 				72DD706D2104B11B004BFA53 /* Sources */,
 				72DD706E2104B11B004BFA53 /* Frameworks */,
 				72DD706F2104B11B004BFA53 /* Resources */,
+				72DD70A52104C7A1004BFA53 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +265,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		72DD70A52104C7A1004BFA53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		72DD706D2104B11B004BFA53 /* Sources */ = {
@@ -432,6 +465,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47PCFA586Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = myCurrencyExchange/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -450,6 +487,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47PCFA586Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = myCurrencyExchange/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
