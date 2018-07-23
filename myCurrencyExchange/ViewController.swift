@@ -10,10 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var apiCall: UIButton!
+    
+    @IBOutlet weak var scrollableText: UITextView!
+
+    @IBAction func tapApiCall(_ sender: UIButton) {
+        UsersAPI().user(number: 1, scrollableText: scrollableText)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        UsersAPI().user(number: 1)
+        setupButton()
+    }
+
+    private func setupButton() {
+        apiCall.setTitle("API CALL", for: UIControlState())
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,15 +38,20 @@ import Alamofire
 let baseURL = "https://jsonplaceholder.typicode.com"
 
 class UsersAPI {
-    func user(number: Int) {
+    func user(number: Int, scrollableText: UITextView) {
         Alamofire.request("\(baseURL)/users/\(number)").responseJSON { response in
-            if let json = response.result.value {
-                print("JSON: \(json)")
+            switch response.result {
+            case .success:
+                if let value = response.result.value {
+                     scrollableText.text = "JSON: \(value)"
+                }
+            case .failure(let error):
+                print(error)
             }
 
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)")
-            }
+//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+//                print("Data: \(utf8Text)")
+//            }
         }
     }
 }
