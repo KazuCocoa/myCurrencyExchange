@@ -18,36 +18,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="blank" translatesAutoresizingMaskIntoConstraints="NO" id="PSj-uq-P9Q">
-                                <rect key="frame" x="16" y="73" width="343" height="512"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPT-oA-iKS">
-                                <rect key="frame" x="16" y="603" width="343" height="30"/>
+                                <rect key="frame" x="16" y="252" width="343" height="30"/>
                                 <color key="backgroundColor" red="0.9932545424" green="0.66146694959999996" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="dPG-AY-ccP"/>
+                                </constraints>
                                 <state key="normal" title="API CALL"/>
                                 <connections>
                                     <action selector="tapApiCall:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lQ0-Hu-47s"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ppb-Sy-zTv">
+                                <rect key="frame" x="139" y="92" width="98" height="59"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58.5" id="hPO-9R-QhA"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rq5-No-IaX">
+                                <rect key="frame" x="86" y="180.5" width="204" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="TPT-oA-iKS" firstAttribute="top" secondItem="PSj-uq-P9Q" secondAttribute="bottom" constant="18" id="A3K-Ok-J8h"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TPT-oA-iKS" secondAttribute="bottom" constant="34" id="BhF-bD-RLh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PSj-uq-P9Q" secondAttribute="trailing" constant="16" id="af9-2q-B1Y"/>
-                            <constraint firstItem="PSj-uq-P9Q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="eEf-yq-hdP"/>
+                            <constraint firstItem="rq5-No-IaX" firstAttribute="top" secondItem="ppb-Sy-zTv" secondAttribute="bottom" constant="30" id="A4N-XQ-DqA"/>
+                            <constraint firstItem="TPT-oA-iKS" firstAttribute="top" secondItem="rq5-No-IaX" secondAttribute="bottom" constant="51" id="F6h-hl-eSM"/>
+                            <constraint firstItem="ppb-Sy-zTv" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="139" id="IrH-xd-lU7"/>
+                            <constraint firstItem="TPT-oA-iKS" firstAttribute="width" secondItem="ppb-Sy-zTv" secondAttribute="width" constant="245" id="Pdd-zf-CZK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ppb-Sy-zTv" secondAttribute="trailing" constant="138" id="R8N-r2-WRk"/>
+                            <constraint firstItem="rq5-No-IaX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="86" id="fHO-F2-sCy"/>
+                            <constraint firstItem="ppb-Sy-zTv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="72" id="hfM-18-RQy"/>
                             <constraint firstItem="TPT-oA-iKS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="kgw-4i-iTm"/>
+                            <constraint firstItem="rq5-No-IaX" firstAttribute="width" secondItem="ppb-Sy-zTv" secondAttribute="width" constant="106" id="ngg-6c-eEd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TPT-oA-iKS" secondAttribute="trailing" constant="16" id="r3q-Rc-UKz"/>
-                            <constraint firstItem="PSj-uq-P9Q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="53" id="zya-sU-3Au"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rq5-No-IaX" secondAttribute="trailing" constant="85" id="sCo-Oe-Kfp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TPT-oA-iKS" secondAttribute="bottom" constant="385" id="wnv-CN-ohV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="apiCall" destination="TPT-oA-iKS" id="wbQ-MO-m7R"/>
-                        <outlet property="scrollableText" destination="PSj-uq-P9Q" id="tOr-wu-bBu"/>
+                        <outlet property="currencyJPY" destination="ppb-Sy-zTv" id="JQx-3W-89Z"/>
+                        <outlet property="currencyResult" destination="rq5-No-IaX" id="sjY-5z-G90"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

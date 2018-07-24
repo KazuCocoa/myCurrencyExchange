@@ -12,10 +12,12 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var apiCall: UIButton!
     
-    @IBOutlet weak var scrollableText: UITextView!
+    @IBOutlet weak var currencyJPY: UITextField!
+
+    @IBOutlet weak var currencyResult: UILabel!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        CurrencyLive().updateUSDJPY(scrollableText: scrollableText)
+        CurrencyLive().updateUSDJPY(currencyJPY: currencyJPY.text!, currencyResult: currencyResult)
     }
 
     override func viewDidLoad() {
@@ -44,7 +46,7 @@ class CurrencyLive {
     let currencies = "USD,JPY"
     let format = "1"
 
-    func updateUSDJPY(scrollableText: UITextView) {
+    func updateUSDJPY(currencyJPY: String, currencyResult: UILabel) {
         let parameters: Parameters = [
             "access_key": access_key,
             "currencies": currencies,
@@ -54,8 +56,13 @@ class CurrencyLive {
         Alamofire.request(resourceURL, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
-                if let value = response.result.value {
-                    scrollableText.text = "JSON: \(value)"
+                if let data = response.data {
+                    let currency = try? JSONDecoder().decode(CurrencyLiveCodable.self, from: data)
+                    if let rate = currency?.quotes.USDJPY {
+                        currencyResult.text = "\(Int(round(Double(currencyJPY)! / rate))) USD"
+                    } else {
+                        currencyResult.text = "no rate"
+                    }
 
                 }
             case .failure(let error):
@@ -65,18 +72,17 @@ class CurrencyLive {
     }
 }
 
-// TODO: codable for below response
-//{
-//    "success":true,
-//    "terms":"https:\/\/currencylayer.com\/terms",
-//    "privacy":"https:\/\/currencylayer.com\/privacy",
-//    "timestamp":1532388547,
-//    "source":"USD",
-//    "quotes":{
-//        "USDUSD":1,
-//        "USDJPY":111.495003
-//    }
-//}
 class CurrencyLiveCodable : Codable {
+    var success: Bool
+    var terms: URL
+    var privacy: URL
+    var timestamp: Int
+    var source: String
+    var quotes: QuotedCurrency
 
+}
+
+class QuotedCurrency : Codable {
+    var USDUSD: Double
+    var USDJPY: Double
 }
