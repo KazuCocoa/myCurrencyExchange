@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var scrollableText: UITextView!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        UsersAPI().user(number: 1, scrollableText: scrollableText)
+        CurrencyLive().updateUSDJPY(scrollableText: scrollableText)
     }
 
     override func viewDidLoad() {
@@ -35,23 +35,48 @@ class ViewController: UIViewController {
 
 import Alamofire
 
-let baseURL = "https://jsonplaceholder.typicode.com"
+let baseURL = "http://apilayer.net/api"
 
-class UsersAPI {
-    func user(number: Int, scrollableText: UITextView) {
-        Alamofire.request("\(baseURL)/users/\(number)").responseJSON { response in
+class CurrencyLive {
+    let resourceURL = "\(baseURL)/live"
+
+    let access_key = "35fe2cee5474e89d0309a19874f9a8ff"
+    let currencies = "USD,JPY"
+    let format = "1"
+
+    func updateUSDJPY(scrollableText: UITextView) {
+        let parameters: Parameters = [
+            "access_key": access_key,
+            "currencies": currencies,
+            "format": format
+        ]
+
+        Alamofire.request(resourceURL, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success:
                 if let value = response.result.value {
-                     scrollableText.text = "JSON: \(value)"
+                    scrollableText.text = "JSON: \(value)"
+
                 }
             case .failure(let error):
                 print(error)
             }
-
-//            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-//                print("Data: \(utf8Text)")
-//            }
         }
     }
+}
+
+// TODO: codable for below response
+//{
+//    "success":true,
+//    "terms":"https:\/\/currencylayer.com\/terms",
+//    "privacy":"https:\/\/currencylayer.com\/privacy",
+//    "timestamp":1532388547,
+//    "source":"USD",
+//    "quotes":{
+//        "USDUSD":1,
+//        "USDJPY":111.495003
+//    }
+//}
+class CurrencyLiveCodable : Codable {
+
 }
