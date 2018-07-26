@@ -41,8 +41,8 @@ class ViewController: UIViewController {
 
 import Alamofire
 
-let baseURL = "http://apilayer.net/api"
-
+let baseURL = "http://localhost:9000" // "http://apilayer.net/api"
+//ENVOY_BASEURL
 class CurrencyLive {
     let resourceURL = "\(baseURL)/live"
 
@@ -89,9 +89,9 @@ class CurrencyLiveCodable : Codable {
     var source: String
     var quotes: QuotedCurrency
 
+    internal class QuotedCurrency : Codable {
+        var USDUSD: Double
+        var USDJPY: Double
+    }
 }
 
-class QuotedCurrency : Codable {
-    var USDUSD: Double
-    var USDJPY: Double
-}

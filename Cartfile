@@ -1,2 +1,4 @@
 github "Alamofire/Alamofire" ~> 4.7
+github "envoy/Embassy" ~> 4.0
+github "envoy/Ambassador" ~> 4.0
 

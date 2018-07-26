@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7235FD33210A2EEE007C8513 /* uitestbase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7235FD32210A2EEE007C8513 /* uitestbase.swift */; };
+		7235FD34210A304B007C8513 /* Embassy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7235FD2F210A2DCB007C8513 /* Embassy.framework */; };
+		7235FD36210A309E007C8513 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7235FD35210A309D007C8513 /* Ambassador.framework */; };
 		72DD70752104B11B004BFA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DD70742104B11B004BFA53 /* AppDelegate.swift */; };
 		72DD70772104B11B004BFA53 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DD70762104B11B004BFA53 /* ViewController.swift */; };
 		72DD707A2104B11B004BFA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72DD70782104B11B004BFA53 /* Main.storyboard */; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7235FD2F210A2DCB007C8513 /* Embassy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Embassy.framework; path = Carthage/Build/iOS/Embassy.framework; sourceTree = "<group>"; };
+		7235FD32210A2EEE007C8513 /* uitestbase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uitestbase.swift; sourceTree = "<group>"; };
+		7235FD35210A309D007C8513 /* Ambassador.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ambassador.framework; path = Carthage/Build/iOS/Ambassador.framework; sourceTree = "<group>"; };
 		72DD70712104B11B004BFA53 /* myCurrencyExchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCurrencyExchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72DD70742104B11B004BFA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		72DD70762104B11B004BFA53 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7235FD34210A304B007C8513 /* Embassy.framework in Frameworks */,
+				7235FD36210A309E007C8513 /* Ambassador.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +134,7 @@
 			children = (
 				72DD70942104B120004BFA53 /* myCurrencyExchangeUITests.swift */,
 				72DD70962104B120004BFA53 /* Info.plist */,
+				7235FD32210A2EEE007C8513 /* uitestbase.swift */,
 			);
 			path = myCurrencyExchangeUITests;
 			sourceTree = "<group>";
@@ -133,6 +142,8 @@
 		72DD70A22104C798004BFA53 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7235FD35210A309D007C8513 /* Ambassador.framework */,
+				7235FD2F210A2DCB007C8513 /* Embassy.framework */,
 				72DD70A62104EBD2004BFA53 /* Alamofire.framework */,
 				72DD70A32104C798004BFA53 /* Siesta.framework */,
 			);
@@ -149,7 +160,7 @@
 				72DD706D2104B11B004BFA53 /* Sources */,
 				72DD706E2104B11B004BFA53 /* Frameworks */,
 				72DD706F2104B11B004BFA53 /* Resources */,
-				72DD70A52104C7A1004BFA53 /* ShellScript */,
+				72DD70A52104C7A1004BFA53 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -185,6 +196,7 @@
 				72DD708C2104B120004BFA53 /* Sources */,
 				72DD708D2104B120004BFA53 /* Frameworks */,
 				72DD708E2104B120004BFA53 /* Resources */,
+				7235FD31210A2E00007C8513 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -267,7 +279,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		72DD70A52104C7A1004BFA53 /* ShellScript */ = {
+		7235FD31210A2E00007C8513 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Embassy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Ambassador.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Embassy.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Ambassador.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		72DD70A52104C7A1004BFA53 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -275,6 +304,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
+			name = "Run Script";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 			);
@@ -306,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7235FD33210A2EEE007C8513 /* uitestbase.swift in Sources */,
 				72DD70952104B120004BFA53 /* myCurrencyExchangeUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +582,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47PCFA586Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = myCurrencyExchangeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,6 +606,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 47PCFA586Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = myCurrencyExchangeUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
