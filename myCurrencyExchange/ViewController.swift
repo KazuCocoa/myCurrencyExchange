@@ -17,16 +17,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var currencyResult: UILabel!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        CurrencyLive().updateUSDJPY(currencyJPY: currencyJPY.text!, currencyResult: currencyResult)
+        let result = CurrencyLive().updateUSDJPY(currencyJPY: currencyJPY.text!, currencyResult: currencyResult)
+        showAlertWrongCurrency(result)
+    }
+
+    private func showAlertWrongCurrency(_ flag: Bool) {
+        if flag == false {
+            let alert = UIAlertController(title: "Wrong input", message: "You should input a number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupButton()
-    }
-
-    private func setupButton() {
-        apiCall.setTitle("API CALL", for: UIControlState())
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +50,11 @@ class CurrencyLive {
     let currencies = "USD,JPY"
     let format = "1"
 
-    func updateUSDJPY(currencyJPY: String, currencyResult: UILabel) {
+    func updateUSDJPY(currencyJPY: String, currencyResult: UILabel) -> Bool {
+        guard let jpy = Double(currencyJPY) else {
+            return false
+        }
+
         let parameters: Parameters = [
             "access_key": access_key,
             "currencies": currencies,
@@ -59,7 +67,7 @@ class CurrencyLive {
                 if let data = response.data {
                     let currency = try? JSONDecoder().decode(CurrencyLiveCodable.self, from: data)
                     if let rate = currency?.quotes.USDJPY {
-                        currencyResult.text = "\(Int(round(Double(currencyJPY)! / rate))) USD"
+                        currencyResult.text = "\(Int(round(jpy / rate)))"
                     } else {
                         currencyResult.text = "no rate"
                     }
@@ -69,6 +77,7 @@ class CurrencyLive {
                 print(error)
             }
         }
+        return true
     }
 }
 
