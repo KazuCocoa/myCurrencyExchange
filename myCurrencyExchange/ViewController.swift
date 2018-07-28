@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    lazy var presenter: CurrencyLivePresenter = CurrencyLivePresenter(view: self)
+
     @IBOutlet weak var apiCall: UIButton!
     
     @IBOutlet weak var currencyJPY: UITextField!
@@ -17,16 +19,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var currencyResult: UILabel!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        let result = CurrencyLive().updateUSDJPY(currencyJPY: currencyJPY.text!, currencyResult: currencyResult)
-        showAlertWrongCurrency(result)
+        presenter.update()
     }
 
-    private func showAlertWrongCurrency(_ flag: Bool) {
-        if flag == false {
-            let alert = UIAlertController(title: "Wrong input", message: "You should input a number", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
-            self.present(alert, animated: true, completion: nil)
-        }
+    func showAlertWrongCurrency(_ message: String) {
+        let alert = UIAlertController(title: "Wrong input", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -38,60 +37,3 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
-
-import Alamofire
-
-let baseURL = "http://localhost:9000" // "http://apilayer.net/api"
-//ENVOY_BASEURL
-class CurrencyLive {
-    let resourceURL = "\(baseURL)/live"
-
-    let access_key = "35fe2cee5474e89d0309a19874f9a8ff"
-    let currencies = "USD,JPY"
-    let format = "1"
-
-    func updateUSDJPY(currencyJPY: String, currencyResult: UILabel) -> Bool {
-        guard let jpy = Double(currencyJPY) else {
-            return false
-        }
-
-        let parameters: Parameters = [
-            "access_key": access_key,
-            "currencies": currencies,
-            "format": format
-        ]
-
-        Alamofire.request(resourceURL, parameters: parameters, encoding: URLEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success:
-                if let data = response.data {
-                    let currency = try? JSONDecoder().decode(CurrencyLiveCodable.self, from: data)
-                    if let rate = currency?.quotes.USDJPY {
-                        currencyResult.text = "\(Int(round(jpy / rate)))"
-                    } else {
-                        currencyResult.text = "no rate"
-                    }
-
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
-        return true
-    }
-}
-
-class CurrencyLiveCodable : Codable {
-    var success: Bool
-    var terms: URL
-    var privacy: URL
-    var timestamp: Int
-    var source: String
-    var quotes: QuotedCurrency
-
-    internal class QuotedCurrency : Codable {
-        var USDUSD: Double
-        var USDJPY: Double
-    }
-}
-
