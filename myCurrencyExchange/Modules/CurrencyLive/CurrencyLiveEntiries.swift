@@ -17,7 +17,6 @@ struct CurrencyLiveCodable : Codable {
     var quotes: QuotedCurrency
 
     internal struct QuotedCurrency : Codable {
-        var USDUSD: Double
         var USDJPY: Double
     }
 }

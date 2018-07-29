@@ -20,3 +20,8 @@ struct CurrencyConfig {
         }
     }
 }
+
+enum CurrencyConvertFromUSD : String {
+    case JPY = "JPY"
+    case USD = "USD"
+}

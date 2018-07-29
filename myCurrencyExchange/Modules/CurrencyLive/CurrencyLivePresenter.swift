@@ -33,7 +33,7 @@ class CurrencyLivePresenter : CurrencyLivePresenterProtocol, CurrencyLivePresent
     }
 
     func getCurrencyLive() {
-        self.interactor.getCurrencies(currency: self.view.currencyJPY.text!, with: "USD,JPY")
+        self.interactor.getCurrencies(currency: self.view.currencyJPY.text!, with: .JPY)
     }
 
     func updateCurrencyResult(result: String) {

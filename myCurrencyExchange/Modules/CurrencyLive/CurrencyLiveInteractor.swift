@@ -10,7 +10,7 @@ import Foundation
 
 // use case
 protocol CurrencyLiveInteractorInput {
-    func getCurrencies(currency: String, with currencies: String)
+    func getCurrencies(currency: String, with currencies: CurrencyConvertFromUSD)
 }
 
 // Interactor: contains the business logic as specified by a use case.
@@ -23,8 +23,8 @@ class CurrencyLiveInteractor : CurrencyLiveInteractorInput {
         self.presenter = presenter
     }
 
-    func getCurrencies(currency: String, with currencies: String) {
-        currencyLiveService.getLive(currencies: currencies,
+    func getCurrencies(currency: String, with currencies: CurrencyConvertFromUSD) {
+        currencyLiveService.getLive(currencies: currencies.rawValue,
                                     completion: { result, data in
                                         switch result{
                                         case true:
@@ -47,11 +47,16 @@ class CurrencyLiveInteractor : CurrencyLiveInteractorInput {
         }
 
         var resultCurrency = "0"
-        if let rate = (currencies as? CurrencyLiveCodable)?.quotes.USDJPY {
-            resultCurrency = "\(Int(round(jpy / rate)))"
+
+        if isUSD(currencies: currencies as? CurrencyLiveCodable), let rate = (currencies as? CurrencyLiveCodable)?.quotes.USDJPY {
+                resultCurrency = "\(Int(round(jpy / rate)))"
         }
 
         presenter.updateCurrencyResult(result: resultCurrency)
+    }
+
+    private func isUSD(currencies: CurrencyLiveCodable?) -> Bool {
+        return currencies?.source == CurrencyConvertFromUSD.USD.rawValue
     }
 
     func updateCurrencyError(error: Any) {

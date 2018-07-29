@@ -26,7 +26,6 @@ class DefaultRouter: Router {
                 "timestamp": 1532388547,
                 "source": "USD",
                 "quotes": [
-                    "USDUSD": 1,
                     "USDJPY": 111.495003
                 ]
             ]
