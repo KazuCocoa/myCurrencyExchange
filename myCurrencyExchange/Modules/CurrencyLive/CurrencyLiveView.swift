@@ -8,7 +8,14 @@
 
 //import Foundation
 
+// View: displays what it is told to by the Presenter and relays user input back to the Presenter.
+
+protocol CurrencyLiveViewProtocol {
+    func updateCurrencyResult(_ text: String)
+    func showAllertMessage(_ message: String)
+}
+
 // ViewController
-//class CurrencyLiveView {
+//protocol CurrencyLiveView {
 //
 //}

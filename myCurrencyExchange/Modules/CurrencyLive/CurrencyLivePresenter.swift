@@ -8,7 +8,14 @@
 
 import Foundation
 
-class CurrencyLivePresenter {
+protocol CurrencyLivePresenterProtocol {
+    func getCurrencyLive()
+    func updateCurrencyResult(result: String)
+    func showError(message: String)
+}
+
+// Presenter: contains view logic for preparing content for display (as received from the Interactor) and for reacting to user inputs (by requesting new data from the Interactor).
+class CurrencyLivePresenter : CurrencyLivePresenterProtocol {
     lazy var interactor: CurrencyLiveInteractor = CurrencyLiveInteractor(presentor: self)
     lazy var wireframe: CurrencyLiveWireframe = CurrencyLiveWireframe()
     weak var view: ViewController!
@@ -17,26 +24,15 @@ class CurrencyLivePresenter {
         self.view = view
     }
 
-    func convertWith(currencies: CurrencyLiveCodable?) {
-        guard let jpy = Double(view.currencyJPY.text!) else {
-            view.showAlertWrongCurrency("You should input a number")
-            return
-        }
-
-        if jpy < 0 {
-            view.showAlertWrongCurrency("The number should be a natural number")
-            return
-        }
-
-        var resultCurrency = "0"
-        if let rate = currencies?.quotes.USDJPY {
-             resultCurrency = "\(Int(round(jpy / rate)))"
-        }
-
-        view.currencyResult.text = resultCurrency
+    func getCurrencyLive() {
+        interactor.getCurrencies(currency: view.currencyJPY.text!, with: "USD,JPY")
     }
 
-    func update() {
-        interactor.getCurrencies(currencies: "USD,JPY")
+    func updateCurrencyResult(result: String) {
+        view.updateCurrencyResult(result)
+    }
+
+    func showError(message: String) {
+        view.showAllertMessage(message)
     }
 }

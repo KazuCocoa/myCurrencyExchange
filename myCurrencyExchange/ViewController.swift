@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CurrencyLiveViewProtocol {
 
     lazy var presenter: CurrencyLivePresenter = CurrencyLivePresenter(view: self)
 
@@ -19,10 +19,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var currencyResult: UILabel!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        presenter.update()
+        presenter.getCurrencyLive()
     }
 
-    func showAlertWrongCurrency(_ message: String) {
+    func updateCurrencyResult(_ text: String) {
+        currencyResult.text = text
+    }
+
+    func showAllertMessage(_ message: String) {
         let alert = UIAlertController(title: "Wrong input", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         self.present(alert, animated: true, completion: nil)
