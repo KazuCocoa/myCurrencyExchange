@@ -8,31 +8,39 @@
 
 import Foundation
 
+// from view to presenter
 protocol CurrencyLivePresenterProtocol {
     func getCurrencyLive()
+}
+
+// from interactor to presenter
+protocol CurrencyLivePresenterOutputProtocol {
     func updateCurrencyResult(result: String)
     func showError(message: String)
 }
 
 // Presenter: contains view logic for preparing content for display (as received from the Interactor) and for reacting to user inputs (by requesting new data from the Interactor).
-class CurrencyLivePresenter : CurrencyLivePresenterProtocol {
-    lazy var interactor: CurrencyLiveInteractor = CurrencyLiveInteractor(presentor: self)
-    lazy var wireframe: CurrencyLiveWireframe = CurrencyLiveWireframe()
+class CurrencyLivePresenter : CurrencyLivePresenterProtocol, CurrencyLivePresenterOutputProtocol {
     weak var view: ViewController!
+
+    var interactor: CurrencyLiveInteractorInput!
+
+    var wireframe: CurrencyLiveWireframe!
 
     init(view: ViewController) {
         self.view = view
+        self.interactor = CurrencyLiveInteractor(presenter: self)
     }
 
     func getCurrencyLive() {
-        interactor.getCurrencies(currency: view.currencyJPY.text!, with: "USD,JPY")
+        self.interactor.getCurrencies(currency: self.view.currencyJPY.text!, with: "USD,JPY")
     }
 
     func updateCurrencyResult(result: String) {
-        view.updateCurrencyResult(result)
+        self.view.updateCurrencyResult(result)
     }
 
     func showError(message: String) {
-        view.showAllertMessage(message)
+        self.view.showAllertMessage(message)
     }
 }

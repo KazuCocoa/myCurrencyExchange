@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, CurrencyLiveViewProtocol {
 
-    lazy var presenter: CurrencyLivePresenter = CurrencyLivePresenter(view: self)
+    var presenter: CurrencyLivePresenter!
 
     @IBOutlet weak var apiCall: UIButton!
     
@@ -19,7 +19,17 @@ class ViewController: UIViewController, CurrencyLiveViewProtocol {
     @IBOutlet weak var currencyResult: UILabel!
 
     @IBAction func tapApiCall(_ sender: UIButton) {
-        presenter.getCurrencyLive()
+        self.presenter.getCurrencyLive()
+    }
+
+    override func viewDidLoad() {
+        self.presenter = CurrencyLivePresenter(view: self)
+        super.viewDidLoad()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     func updateCurrencyResult(_ text: String) {
@@ -30,14 +40,5 @@ class ViewController: UIViewController, CurrencyLiveViewProtocol {
         let alert = UIAlertController(title: "Wrong input", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         self.present(alert, animated: true, completion: nil)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

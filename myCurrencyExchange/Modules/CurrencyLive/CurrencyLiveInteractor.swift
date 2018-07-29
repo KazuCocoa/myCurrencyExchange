@@ -8,13 +8,19 @@
 
 import Foundation
 
-// Interactor: contains the business logic as specified by a use case.
-class CurrencyLiveInteractor {
-    lazy var currencyLiveService: CurrencyLiveService = CurrencyLiveService()
-    weak var presentor: CurrencyLivePresenter!
+// use case
+protocol CurrencyLiveInteractorInput {
+    func getCurrencies(currency: String, with currencies: String)
+}
 
-    init(presentor: CurrencyLivePresenter) {
-        self.presentor = presentor
+// Interactor: contains the business logic as specified by a use case.
+class CurrencyLiveInteractor : CurrencyLiveInteractorInput {
+    lazy var currencyLiveService: CurrencyLiveService = CurrencyLiveService()
+
+    var presenter: CurrencyLivePresenterOutputProtocol!
+
+    init(presenter: CurrencyLivePresenter) {
+        self.presenter = presenter
     }
 
     func getCurrencies(currency: String, with currencies: String) {
@@ -31,12 +37,12 @@ class CurrencyLiveInteractor {
 
     private func convert(currency: String, with currencies: Any) {
         guard let jpy = Double(currency) else {
-            presentor.showError(message: "You should input a number")
+            presenter.showError(message: "You should input a number")
             return
         }
 
         if jpy < 0 {
-            presentor.showError(message: "The number should be a natural number")
+            presenter.showError(message: "The number should be a natural number")
             return
         }
 
@@ -45,10 +51,10 @@ class CurrencyLiveInteractor {
             resultCurrency = "\(Int(round(jpy / rate)))"
         }
 
-        presentor.updateCurrencyResult(result: resultCurrency)
+        presenter.updateCurrencyResult(result: resultCurrency)
     }
 
     func updateCurrencyError(error: Any) {
-        presentor.showError(message: ((error as! Error).localizedDescription))
+        presenter.showError(message: ((error as! Error).localizedDescription))
     }
 }
