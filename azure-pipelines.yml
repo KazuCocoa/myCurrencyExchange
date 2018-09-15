@@ -6,10 +6,19 @@
 pool:
   vmImage: 'macOS 10.13'
 
+variables:
+  scheme: 'myCurrencyExchange'
+  sdk: 'iphoneos'
+  configuration: 'Debug'
+
 steps:
+- script: /usr/local/bin/carthage update --platform ios
 - task: Xcode@5
   inputs:
-    scheme: 'myCurrencyExchange'
-    sdk: 'iphoneos'
-    configuration: 'Debug'
+    scheme: '$(scheme)'
+    sdk: '$(sdk)'
+    configuration: '$(configuration)'
     xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
+    packageApp: false
+    xcWorkspacePath: 'myCurrencyExchange.xcodeproj'
+
