@@ -13,12 +13,31 @@ variables:
 
 steps:
 - script: /usr/local/bin/carthage update --platform ios
+  displayName: 'Carthage installation'
 - task: Xcode@5
+  displayName: 'Running XCTest/XCUITest'
   inputs:
+    actions: 'test'
     scheme: '$(scheme)'
-    sdk: '$(sdk)'
+    sdk: 'iphonesimulator'
     configuration: '$(configuration)'
     xcodeVersion: 'default' # Options: 8, 9, default, specifyPath
     packageApp: false
     xcWorkspacePath: 'myCurrencyExchange.xcodeproj'
-
+    destinationSimulators: 'iPhone 7'
+    destinationTypeOption: 'simulators'
+    destinationPlatformOption: 'iOS'
+    signingOption: "auto"
+    useXcpretty: true
+    publishJUnitResults: 'build/reports/junit.xml'
+- task: Xcode@5
+  displayName: 'Xcode debug build'
+  inputs:
+    actions: 'build'
+    scheme: '$(scheme)'
+    sdk: '$(sdk)'
+    configuration: '$(configuration)'
+    xcodeVersion: 'default'
+    packageApp: false
+    xcWorkspacePath: 'myCurrencyExchange.xcodeproj'
+    useXcpretty: true
